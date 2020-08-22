@@ -1,16 +1,9 @@
-const colorTintGradient = [
-  { red: 252, green: 50, blue: 10 },
-  { red: 252, green: 171, blue: 10 },
-  { red: 212, green: 252, blue: 10 },
-];
-
 function toHex(c) {
-  var s = "0123456789abcdef";
-  var i = parseInt(c);
-  if (i == 0 || isNaN(c)) return "00";
-  i = Math.round(Math.min(Math.max(0, i), 255));
-  return s.charAt((i - (i % 16)) / 16) + s.charAt(i % 16);
+  if (isNaN(c)) return "00";
+  const number = parseInt(c);
+  return Math.min(Math.max(0, number), 255).toString(16).padStart(2, "0");
 }
+
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/i.exec(hex);
   return result
@@ -19,13 +12,11 @@ function hexToRgb(hex) {
         green: parseInt(result[2], 16),
         blue: parseInt(result[3], 16),
       }
-    : null;
+    : { red: 255, green: 255, blue: 255 };
 }
 
 function getColorFromHPPercent(hpPercent) {
-  if (hpPercent >= 1.0) {
-    return "#FFFFFF";
-  }
+  if (hpPercent >= 1.0) return "#FFFFFF";
 
   const lowColor =
     hpPercent > 0.5
@@ -43,10 +34,10 @@ function getColorFromHPPercent(hpPercent) {
   console.log(highColor);
   console.log(gradientPercentage);
 
-  return getColor(hexToRgb(lowColor), hexToRgb(highColor), gradientPercentage);
+  return getGradientColor(hexToRgb(lowColor), hexToRgb(highColor), gradientPercentage);
 }
 
-function getColor(startColor, endColor, percentage) {
+function getGradientColor(startColor, endColor, percentage) {
   const red = (endColor.red - startColor.red) * percentage + startColor.red;
   const green =
     (endColor.green - startColor.green) * percentage + startColor.green;
