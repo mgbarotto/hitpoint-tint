@@ -16,7 +16,7 @@ function hexToRgb(hex) {
 }
 
 function getColorFromHPPercent(hpPercent) {
-  if (hpPercent >= 1.0) return "#FFFFFF";
+  if (isNaN(hpPercent) || hpPercent >= 1.0) return "#FFFFFF";
 
   const lowColor =
     hpPercent > 0.5
@@ -34,7 +34,11 @@ function getColorFromHPPercent(hpPercent) {
   console.log(highColor);
   console.log(gradientPercentage);
 
-  return getGradientColor(hexToRgb(lowColor), hexToRgb(highColor), gradientPercentage);
+  return getGradientColor(
+    hexToRgb(lowColor),
+    hexToRgb(highColor),
+    gradientPercentage
+  );
 }
 
 function getGradientColor(startColor, endColor, percentage) {
@@ -88,9 +92,9 @@ Hooks.once("ready", () => {
 Hooks.on("preUpdateToken", (scene, token, updateData) => {
   const oldHP = token?.actorData?.data?.attributes?.hp.value;
   const newHP = updateData?.actorData?.data?.attributes?.hp.value;
-  const maxHP = token?.actorData?.data?.attributes?.bar1?.max;
+  const maxHP = canvas.tokens.get(token._id).actor.data.data.attributes.hp.max;
 
-  if (oldHP && newHP && oldHP != newHP) {
+  if (!isNaN(oldHP) && !isNaN(newHP) && oldHP != newHP) {
     var newColor = getColorFromHPPercent(newHP / maxHP);
 
     console.log("Hitpoints changed");
@@ -108,7 +112,7 @@ Hooks.on("preUpdateActor", (actor, updateData) => {
   const newHP = updateData?.data?.attributes?.hp?.value;
   const maxHP = actor?.data?.data?.attributes?.hp?.max;
 
-  if (oldHP && newHP && oldHP != newHP) {
+  if (!isNaN(oldHP) && !isNaN(newHP) && oldHP != newHP) {
     var newColor = getColorFromHPPercent(newHP / maxHP);
 
     console.log(`Hitpoints changed ${oldHP} to ${newHP}`);
