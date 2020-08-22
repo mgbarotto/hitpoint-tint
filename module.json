@@ -1,0 +1,10 @@
+{
+    "name": "hitpoint-tint",
+    "title": "Hitpoint Tint - Tint Tokens based on current HP",
+    "description": "A simple module to tint tokens with a gradient based on their current HP %",
+    "author": "Nazacra",
+    "version": "1.0.0",
+    "minimumCoreVersion": "0.6.5",
+    "system": "dnd5e",
+    "scripts": ["scripts/hitpoint-tint.js"]
+  }
