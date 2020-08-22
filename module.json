@@ -6,5 +6,10 @@
     "version": "1.0.0",
     "minimumCoreVersion": "0.6.5",
     "system": "dnd5e",
-    "scripts": ["scripts/hitpoint-tint.js"]
+    "scripts": ["scripts/hitpoint-tint.js"],
+    "url": "https://github.com/Nazacra/hitpoint-tint/",
+    "manifest": "https://raw.githubusercontent.com/Nazacra/hitpoint-tint/master/module.json",
+    "download": "https://github.com/Nazacra/hitpoint-tint/archive/v1.0.0.zip",
+    "license": "./LICENSE",
+    "readme": "./README.md"
   }
