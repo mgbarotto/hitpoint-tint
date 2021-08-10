@@ -1,15 +1,22 @@
 {
-    "name": "hitpoint-tint",
-    "title": "Hitpoint Tint - Tint Tokens based on current HP",
-    "description": "A simple module to tint tokens with a gradient based on their current HP %",
-    "author": "Nazacra",
-    "version": "1.1.0",
-    "minimumCoreVersion": "0.8.8",
-    "system": "dnd5e",
-    "scripts": ["scripts/hitpoint-tint.js"],
-    "url": "https://github.com/Nazacra/hitpoint-tint/",
-    "manifest": "https://raw.githubusercontent.com/Nazacra/hitpoint-tint/master/module.json",
-    "download": "https://github.com/Nazacra/hitpoint-tint/archive/v1.1.0.zip",
-    "license": "./LICENSE",
-    "readme": "./README.md"
-  }
+  "name": "hitpoint-tint",
+  "title": "Hitpoint Tint - Tint Tokens based on current HP",
+  "description": "A simple module to tint tokens with a gradient based on their current HP %",
+  "author": "Nazacra",
+  "url": "https://github.com/Nazacra/hitpoint-tint/",
+  "version": "1.1.1",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "0.8.9",
+  "scripts": ["scripts/hitpoint-tint.js"],
+  "system": ["dnd5e"],
+  "manifest": "https://raw.githubusercontent.com/Nazacra/hitpoint-tint/master/module.json",
+  "download": "https://github.com/Nazacra/hitpoint-tint/archive/v1.1.0.zip",
+  "license": "./LICENSE",
+  "readme": "./README.md",
+  "dependencies": [
+    {
+      "name": "colorsettings",
+      "manifest": "https://raw.githubusercontent.com/ardittristan/VTTColorSettings/master/module.json"
+    }
+  ]
+}
