@@ -89,40 +89,32 @@ Hooks.once("ready", () => {
   });
 });
 
-Hooks.on("preUpdateToken", (scene, token, updateData) => {
-  const oldHP = token?.actorData?.data?.attributes?.hp.value;
-  const newHP = updateData?.actorData?.data?.attributes?.hp.value;
-  const maxHP = canvas.tokens.get(token._id).actor.data.data.attributes.hp.max;
-
-  if (!isNaN(oldHP) && !isNaN(newHP) && oldHP != newHP) {
-    var newColor = getColorFromHPPercent(newHP / maxHP);
-
-    console.log("Hitpoints changed");
-    console.log(newColor);
-
-    scene.updateEmbeddedEntity(Token.embeddedName, {
-      tint: newColor,
-      _id: token._id,
-    });
-  }
-});
-
 Hooks.on("preUpdateActor", (actor, updateData) => {
-  const oldHP = actor?.data?.data?.attributes?.hp?.value;
   const newHP = updateData?.data?.attributes?.hp?.value;
   const maxHP = actor?.data?.data?.attributes?.hp?.max;
 
-  if (!isNaN(oldHP) && !isNaN(newHP) && oldHP != newHP) {
+  if (!isNaN(newHP) && !isNaN(newHP)) {
     var newColor = getColorFromHPPercent(newHP / maxHP);
 
-    console.log(`Hitpoints changed ${oldHP} to ${newHP}`);
+    console.log(`Hitpoints changed to ${newHP}`);
     console.log(newColor);
 
+    if(actor?.parent?.isEmbedded && actor?.parent?.documentName == "Token")
+    {
+      canvas.scene.updateEmbeddedEntity(actor.parent.documentName,  {
+        tint: newColor,
+        _id: actor.parent.id,
+      });
+    }
+
     const applicableTokens = canvas.tokens.placeables.filter(
-      (token) => token.data.actorId == actor.id
+      (token) => token.data.actorId == actor.id && token.data.actorLink
     );
 
-    actor.data.token.tint = newColor;
+    if(actor.data.actorLink)
+    {
+      actor.data.token.tint = newColor;
+    }
 
     applicableTokens.forEach((token) => {
       canvas.scene.updateEmbeddedEntity(Token.embeddedName, {
