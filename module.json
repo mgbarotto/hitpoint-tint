@@ -9,7 +9,7 @@
   "compatibleCoreVersion": "0.8.9",
   "scripts": ["scripts/hitpoint-tint.js"],
   "system": ["dnd5e"],
-  "manifest": "https://raw.githubusercontent.com/Nazacra/hitpoint-tint/master/module.json",
+  "manifest": "https://raw.githubusercontent.com/Nazacra/hitpoint-tint/v1.1.1/module.json",
   "download": "https://github.com/Nazacra/hitpoint-tint/archive/v1.1.1.zip",
   "license": "./LICENSE",
   "readme": "./README.md",
