@@ -101,10 +101,10 @@ Hooks.on("preUpdateActor", (actor, updateData) => {
 
     if(actor?.parent?.isEmbedded && actor?.parent?.documentName == "Token")
     {
-      canvas.scene.updateEmbeddedEntity(actor.parent.documentName,  {
+      canvas.scene.updateEmbeddedDocuments(actor.parent.documentName,  [{
         tint: newColor,
         _id: actor.parent.id,
-      });
+      }]);
     }
 
     const applicableTokens = canvas.tokens.placeables.filter(
@@ -117,10 +117,10 @@ Hooks.on("preUpdateActor", (actor, updateData) => {
     }
 
     applicableTokens.forEach((token) => {
-      canvas.scene.updateEmbeddedEntity(Token.embeddedName, {
+      canvas.scene.updateEmbeddedDocuments(Token.embeddedName, [{
         tint: newColor,
         _id: token.data._id,
-      });
+      }]);
     });
   }
 });
