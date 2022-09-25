@@ -90,37 +90,54 @@ Hooks.once("ready", () => {
 });
 
 Hooks.on("preUpdateActor", (actor, updateData) => {
-  const newHP = updateData?.data?.attributes?.hp?.value;
-  const maxHP = actor?.data?.data?.attributes?.hp?.max;
+  const newHP = updateData?.system?.attributes?.hp?.value;
+  const maxHP = actor?.system?.attributes?.hp?.max;
+  
+  if (!newHP || !maxHP || isNaN(newHP) || isNaN(newHP))
+    return;
 
-  if (!isNaN(newHP) && !isNaN(newHP)) {
-    var newColor = getColorFromHPPercent(newHP / maxHP);
+  var newColor = getColorFromHPPercent(newHP / maxHP);
 
-    console.log(`Hitpoints changed to ${newHP}`);
-    console.log(newColor);
-
-    if(actor?.parent?.isEmbedded && actor?.parent?.documentName == "Token")
-    {
-      canvas.scene.updateEmbeddedDocuments(actor.parent.documentName,  [{
-        tint: newColor,
-        _id: actor.parent.id,
-      }]);
-    }
-
-    const applicableTokens = canvas.tokens.placeables.filter(
-      (token) => token.data.actorId == actor.id && token.data.actorLink
-    );
-
-    if(actor.data.actorLink)
-    {
-      actor.data.token.tint = newColor;
-    }
-
-    applicableTokens.forEach((token) => {
-      canvas.scene.updateEmbeddedDocuments(Token.embeddedName, [{
-        tint: newColor,
-        _id: token.data._id,
-      }]);
-    });
+  // update for unlinked tokens (typically NPCs)
+  if(actor?.parent?.isEmbedded && actor?.parent?.documentName == "Token")
+  {
+    canvas.scene.updateEmbeddedDocuments(actor.parent.documentName,  [{
+      tint: newColor,
+      _id: actor.parent.id,
+    }]);
   }
+
+  // find all linked tokens in the current scene
+  const applicableTokens = canvas.tokens.placeables.filter(
+    (token) => token.document.actorId == actor.id && token.document.actorLink
+  );
+  
+  // update for linked tokens (typically PCs)
+  applicableTokens.forEach((token) => {
+    canvas.scene.updateEmbeddedDocuments(Token.embeddedName, [{
+      tint: newColor,
+      _id: token.id,
+    }]);
+  });
 });
+
+
+function refresh_token_tint(token) {
+  const newHP = token.actor.system.attributes.hp.value;
+  const maxHP = token.actor.system.attributes.hp.max;
+
+  if (!newHP || !maxHP || isNaN(newHP) || isNaN(newHP))
+    return;
+
+  if(newColor == token.mesh.tint.css)
+      return;
+  
+  var newColor = getColorFromHPPercent(newHP / maxHP);
+  canvas.scene.updateEmbeddedDocuments(Token.embeddedName, [{
+    tint: newColor,
+    _id: token.id,
+  }]);  
+}
+
+Hooks.on("createToken", refresh_token_tint);
+Hooks.on("refreshToken", refresh_token_tint);
