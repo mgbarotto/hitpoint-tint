@@ -4,17 +4,18 @@
   "description": "A simple module to tint tokens with a gradient based on their current HP %",
   "authors": [
     {
-      "name": "Nazacra"
+      "name": "Nazacra",
+      "name": "mgbarotto"
     }],
-  "url": "https://github.com/Nazacra/hitpoint-tint/",
-  "version": "1.2.0",
+  "url": "https://github.com/mgbarotto/hitpoint-tint/",
+  "version": "1.2.1",
   "compatibility": {
     "minimum": 10,
-    "verified": "10.286"
+    "verified": "10.291"
   },
   "scripts": ["scripts/hitpoint-tint.js"],
-  "manifest": "https://raw.githubusercontent.com/Nazacra/hitpoint-tint/master/module.json",
-  "download": "https://github.com/Nazacra/hitpoint-tint/archive/v1.2.0.zip",
+  "manifest": "https://raw.githubusercontent.com/mgbarotto/hitpoint-tint/master/module.json",
+  "download": "https://github.com/mgbarotto/hitpoint-tint/archive/v1.2.1.zip",
   "license": "./LICENSE",
   "readme": "./README.md",
   "relationships": {

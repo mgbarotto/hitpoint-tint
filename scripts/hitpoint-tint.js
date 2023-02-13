@@ -109,7 +109,7 @@ Hooks.on("preUpdateActor", (actor, updateData) => {
 
   // find all linked tokens in the current scene
   const applicableTokens = canvas.tokens.placeables.filter(
-    (token) => token.document.actorId == actor.id && token.document.actorLink
+    (token) => token.document.actorId == actor.id && token.document.actorLink && token.isOwner
   );
   
   // update for linked tokens (typically PCs)
